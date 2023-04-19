@@ -22,7 +22,7 @@ local function get_expandable_word_behind_cursor()
 		return nil
 	end
 
-	return string.match(text_before_cursor, "[a-zA-Z_-]+$")
+	return string.match(text_before_cursor, "[a-zA-Z0-6_-]+$")
 end
 
 function M.expand_tag()
