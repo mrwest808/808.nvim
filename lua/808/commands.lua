@@ -18,7 +18,7 @@ local function get_expandable_word_behind_cursor()
 	---@diagnostic disable-next-line: param-type-mismatch
 	local last_char = string.sub(line_text, column_number - 1, column_number - 1)
 
-	if not last_char:match("[a-zA-Z_\-][0-6]?") then
+	if not last_char:match("[a-zA-Z_-][0-6]?") then
 		return nil
 	end
 
