@@ -18,11 +18,11 @@ local function get_expandable_word_behind_cursor()
 	---@diagnostic disable-next-line: param-type-mismatch
 	local last_char = string.sub(line_text, column_number - 1, column_number - 1)
 
-	if not last_char:match("[a-zA-Z0-6_-]") then
+	if not last_char:match("[a-zA-Z0-6._-]") then
 		return nil
 	end
 
-	return string.match(text_before_cursor, "[a-zA-Z0-6_-]+$")
+	return string.match(text_before_cursor, "[a-zA-Z0-6._-]+$")
 end
 
 function M.expand_tag()
@@ -39,8 +39,8 @@ function M.expand_tag()
 
 	enter_normal_mode()
 
-	-- execute the "change inside word" motion
-	vim.api.nvim_feedkeys("ciw", "n", true)
+	-- execute the "change inside WORD" motion
+	vim.api.nvim_feedkeys("ciW", "n", true)
 
 	-- insert the opening bracket
 	vim.api.nvim_feedkeys("<", "n", true)
