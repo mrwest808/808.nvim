@@ -37,10 +37,20 @@ function M.expand_tag()
 		return
 	end
 
+	local current_world_length = string.len(current_word)
+
 	enter_normal_mode()
 
-	-- execute the "change inside WORD" motion
-	vim.api.nvim_feedkeys("ciW", "n", true)
+	-- NOTE: Used `ciW` motion before to allow expansion
+	-- of words separated by dashes and dots, but the `ciW`
+	-- also removed surrounding parentheses which isn't
+	-- desirable. Changing from `ciW` motion to a manual
+	-- jump + change motion based on the length of `current_word` :
+
+	-- jump back to start of current_word
+	-- change until end of current_word
+	vim.api.nvim_feedkeys(current_world_length - 1 .. "h", "n", true)
+	vim.api.nvim_feedkeys("c" .. current_world_length .. "l", "n", true)
 
 	-- insert the opening bracket
 	vim.api.nvim_feedkeys("<", "n", true)
