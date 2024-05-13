@@ -37,7 +37,7 @@ function M.expand_tag()
 		return
 	end
 
-	local current_world_length = string.len(current_word)
+	local current_word_length = string.len(current_word)
 
 	enter_normal_mode()
 
@@ -47,10 +47,13 @@ function M.expand_tag()
 	-- desirable. Changing from `ciW` motion to a manual
 	-- jump + change motion based on the length of `current_word` :
 
-	-- jump one character forward
-	-- change until backwards until start of current_word
-	vim.api.nvim_feedkeys("l", "n", true)
-	vim.api.nvim_feedkeys("c" .. current_world_length .. "h", "n", true)
+	-- jump back to beginning of current_word
+	if current_word_length > 1 then
+		vim.api.nvim_feedkeys(current_word_length - 1 .. "h", "n", true)
+	end
+	
+	-- change until end of current_word
+	vim.api.nvim_feedkeys("c" .. current_word_length .. "l", "n", true)
 
 	-- insert the opening bracket
 	vim.api.nvim_feedkeys("<", "n", true)
